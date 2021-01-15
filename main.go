@@ -1,7 +1,7 @@
 package main
 
 import (
-	"Go-example/models"
+	"Go-Learn-API/models"
 
 	"github.com/gin-gonic/gin"
 )

@@ -1,4 +1,4 @@
-module Go-example
+module Go-Learn-API
 
 go 1.15
 
