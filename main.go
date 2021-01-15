@@ -1,7 +1,7 @@
 package main
 
 import (
-	"net/http"
+	"Go-example/models"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,9 +9,7 @@ import (
 func main() {
 	router := gin.Default()
 
-	router.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"data": "hello world"})
-	})
+	models.ConnectDB()
 
 	router.Run()
 }
