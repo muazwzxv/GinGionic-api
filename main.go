@@ -15,6 +15,7 @@ func main() {
 	router.POST("/books", controllers.CreateBooks)
 	router.GET("/books", controllers.GetAllBooks)
 	router.GET("/books/:id", controllers.GetByIDBooks)
+	router.PATCH("/books/:id", controllers.UpdateByIDBooks)
 
 	router.Run()
 }
