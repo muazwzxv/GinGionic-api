@@ -12,8 +12,9 @@ func main() {
 
 	models.ConnectDB()
 
-	router.GET("/books", controllers.FindBooks)
-	router.POST("/books", controllers.Create)
+	router.POST("/books", controllers.CreateBooks)
+	router.GET("/books", controllers.GetAllBooks)
+	router.GET("/books/:id", controllers.GetByIDBooks)
 
 	router.Run()
 }

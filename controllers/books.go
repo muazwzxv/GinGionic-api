@@ -13,16 +13,16 @@ type CreateBookDTO struct {
 	Author string `json:"author" binding:"required"`
 }
 
-// FindBooks returns all books
-func FindBooks(ctx *gin.Context) {
+// GetAllBooks returns all
+func GetAllBooks(ctx *gin.Context) {
 	var books []models.Book
 	models.DB.Find(&books)
 
 	ctx.JSON(http.StatusOK, gin.H{"Data": books})
 }
 
-// Create := create new book
-func Create(ctx *gin.Context) {
+// CreateBooks := create new book
+func CreateBooks(ctx *gin.Context) {
 	var input CreateBookDTO
 
 	if err := ctx.ShouldBindJSON(&input); err != nil {
@@ -36,5 +36,16 @@ func Create(ctx *gin.Context) {
 	}
 	models.DB.Create(&book)
 
+	ctx.JSON(http.StatusOK, gin.H{"data": book})
+}
+
+// GetByIDBooks := returns by ID
+func GetByIDBooks(ctx *gin.Context) {
+	var book models.Book
+
+	if err := models.DB.Where("id = ?", ctx.Param("id")).First(&book).Error; err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Data not found!"})
+		return
+	}
 	ctx.JSON(http.StatusOK, gin.H{"data": book})
 }
