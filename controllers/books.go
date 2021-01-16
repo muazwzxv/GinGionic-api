@@ -13,7 +13,7 @@ type CreateBookDTO struct {
 	Author string `json:"author" binding:"required"`
 }
 
-// GetAllBooks returns all
+// GetAllBooks := returns all
 func GetAllBooks(ctx *gin.Context) {
 	var books []models.Book
 	models.DB.Find(&books)
