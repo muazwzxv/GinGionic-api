@@ -57,7 +57,7 @@ func ConnectDB() {
 	}
 
 	db.AutoMigrate(&Book{})
-	defer db.Close()
+	// defer db.Close()
 
 	DB = db
 }

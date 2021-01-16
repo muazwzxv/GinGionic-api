@@ -2,7 +2,7 @@ package main
 
 import (
 	"Go-Learn-API/controllers"
-	"fmt"
+	"Go-Learn-API/models"
 	"log"
 
 	"github.com/spf13/viper"
@@ -30,11 +30,10 @@ func viperEnv(key string) string {
 func main() {
 	router := gin.Default()
 
-	fmt.Println(viperEnv("DBPASSWORD"))
-
-	// models.ConnectDB()
+	models.ConnectDB()
 
 	router.GET("/books", controllers.FindBooks)
+	router.POST("/books", controllers.Create)
 
-	// router.Run()
+	router.Run()
 }
