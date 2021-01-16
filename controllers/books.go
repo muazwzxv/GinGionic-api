@@ -62,7 +62,7 @@ func UpdateByIDBooks(ctx *gin.Context) {
 
 	// Query data
 	if err := models.DB.Where("id = ?", ctx.Param("id")).First(&book).Error; err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Record not exist"})
 		return
 	}
 
@@ -76,4 +76,18 @@ func UpdateByIDBooks(ctx *gin.Context) {
 	models.DB.Model(&book).Updates(validate)
 
 	ctx.JSON(http.StatusOK, gin.H{"data": book})
+}
+
+// DeleteByIDBooks := delete by id
+func DeleteByIDBooks(ctx *gin.Context) {
+	var book models.Book
+
+	if err := models.DB.Where("id = ?", ctx.Param("id")).First(&book).Error; err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Record does not exist", "deleted": false})
+		return
+	}
+
+	models.DB.Delete(&book)
+
+	ctx.JSON(http.StatusOK, gin.H{"deleted": true})
 }

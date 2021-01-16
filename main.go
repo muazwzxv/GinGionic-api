@@ -16,6 +16,7 @@ func main() {
 	router.GET("/books", controllers.GetAllBooks)
 	router.GET("/books/:id", controllers.GetByIDBooks)
 	router.PATCH("/books/:id", controllers.UpdateByIDBooks)
+	router.DELETE("books/:id", controllers.DeleteByIDBooks)
 
 	router.Run()
 }
