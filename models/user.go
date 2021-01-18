@@ -5,14 +5,13 @@ import (
 	"time"
 
 	"github.com/badoux/checkmail"
-	"github.com/jinzhu/gorm"
 )
 
 // User := user properties
 type User struct {
-	ID        uint64         `gorm:"primary_key;auto_increment" json:"id"`
-	Email     string         `gorm:"size:255;not null;unique" json:"email"`
-	DeletedAt gorm.DeletedAt `gorm: "index"`
+	ID    uint64 `gorm:"primary_key;auto_increment" json:"id"`
+	Email string `gorm:"size:255;not null;unique" json:"email"`
+	//DeletedAt gorm.DeletedAt `gorm: "index"`
 	CreatedAt time.Time
 }
 
@@ -20,10 +19,9 @@ type User struct {
 func (s *Server) ValidateEmail(email string) error {
 	if email == "" {
 		return errors.New("email is required")
-	} else {
-		if err := checkmail.ValidateFormat(email); err != nil {
-			return errors.New("Invalid email")
-		}
+	}
+	if err := checkmail.ValidateFormat(email); err != nil {
+		return errors.New("Invalid email")
 	}
 	return nil
 }

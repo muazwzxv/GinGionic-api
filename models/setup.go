@@ -1,6 +1,7 @@
 package models
 
 import (
+	"Go-Learn-API/auth"
 	"Go-Learn-API/configs"
 	"fmt"
 
@@ -19,9 +20,15 @@ type Server struct {
 type ServerInterface interface {
 	ConnectDB() (*gorm.DB, error)
 
+	// user methods
 	ValidateEmail(string) error
 	CreateUser(*User) (*User, error)
 	GetUserByEmail(string) (*User, error)
+
+	// auth methods
+	FetchAuth(*auth.AuthDetails) (*Auth, error)
+	DeleteAuth(*auth.AuthDetails) error
+	CreateAuth(uint64) (*Auth, error)
 }
 
 var (
