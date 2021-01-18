@@ -21,3 +21,13 @@ func (s *Server) FetchAuth(auth *auth.AuthDetails) (*Auth, error) {
 	}
 	return authenticate, nil
 }
+
+// DeleteAuth := delete auth info
+func (s *Server) DeleteAuth(auth *auth.AuthDetails) error {
+	authenticate := &Auth{}
+	db := s.DB.Debug().Where("user_id = ? AND auth_uuid = ?", auth.UserID, auth.AuthUUID).Take(&authenticate).Delete(&authenticate)
+	if db.Error != nil {
+		return db.Error
+	}
+	return nil
+}
