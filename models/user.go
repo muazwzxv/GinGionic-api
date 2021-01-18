@@ -2,14 +2,18 @@ package models
 
 import (
 	"errors"
+	"time"
 
 	"github.com/badoux/checkmail"
+	"github.com/jinzhu/gorm"
 )
 
 // User := user properties
 type User struct {
-	ID    uint64 `gorm:"primary_key;auto_increment" json:"id"`
-	Email string `gorm:"size:255;not null;unique" json:"email"`
+	ID        uint64         `gorm:"primary_key;auto_increment" json:"id"`
+	Email     string         `gorm:"size:255;not null;unique" json:"email"`
+	DeletedAt gorm.DeletedAt `gorm: "index"`
+	CreatedAt time.Time
 }
 
 // ValidateEmail := validate incoming email

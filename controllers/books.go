@@ -87,7 +87,7 @@ func DeleteByIDBooks(ctx *gin.Context) {
 		return
 	}
 
-	models.DB.Delete(&book)
+	models.Models.DB.Delete(&book)
 
 	ctx.JSON(http.StatusOK, gin.H{"deleted": true})
 }

@@ -52,7 +52,10 @@ func (s *Server) ConnectDB() (*gorm.DB, error) {
 		panic("Failed to connect to database!")
 	}
 
-	s.DB.Debug().AutoMigrate(&Book{})
+	s.DB.Debug().AutoMigrate(
+		&Book{},
+		&User{},
+	)
 
 	return s.DB, nil
 }
