@@ -17,8 +17,13 @@ type Server struct {
 
 // ServerInterface := server interface
 type ServerInterface interface {
-	ConnectDB()
+	ConnectDB() (*gorm.DB, error)
 }
+
+var (
+	// Model := the instance spawned
+	Model ServerInterface = &Server{}
+)
 
 // ConnectDB connects to the database
 func (s *Server) ConnectDB() (*gorm.DB, error) {
