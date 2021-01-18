@@ -23,3 +23,31 @@ func (s *Server) ValidateEmail(email string) error {
 	}
 	return nil
 }
+
+// CreateUser := create user
+func (s *Server) CreateUser(user *User) (*User, error) {
+
+	emailError := s.ValidateEmail(user.Email)
+	if emailError != nil {
+		return nil, emailError
+	}
+
+	err := s.DB.Debug().Create(&user).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
+
+// GetUserByEmail := returns user
+func (s *Server) GetUserByEmail(email string) (*User, error) {
+
+	user := &User{}
+	err := s.DB.Debug().Where("email = ?", email).Take(&user).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}

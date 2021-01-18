@@ -18,6 +18,10 @@ type Server struct {
 // ServerInterface := server interface
 type ServerInterface interface {
 	ConnectDB() (*gorm.DB, error)
+
+	ValidateEmail(string) error
+	CreateUser(*User) (*User, error)
+	GetUserByEmail(string) (*User, error)
 }
 
 var (
@@ -34,7 +38,6 @@ func (s *Server) ConnectDB() (*gorm.DB, error) {
 		panic("Failed to fetch database")
 	}
 
-	// db, err := gorm.Open("mysql", "user:password@(localhost:3306)/gormLearn?charset=utf8&parseTime=True&loc=Local")
 	s.DB, err = gorm.Open("mysql",
 		fmt.Sprintf("%s:%s@(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local",
 			dbConfig.User,
