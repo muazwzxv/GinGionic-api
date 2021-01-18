@@ -2,6 +2,8 @@ package models
 
 import (
 	"Go-Learn-API/auth"
+
+	"github.com/twinj/uuid"
 )
 
 // Auth := Auth todo
@@ -30,4 +32,18 @@ func (s *Server) DeleteAuth(auth *auth.AuthDetails) error {
 		return db.Error
 	}
 	return nil
+}
+
+// CreateAuth := create row uuid with userID
+func (s *Server) CreateAuth(userID uint64) (*Auth, error) {
+	authenticate := &Auth{}
+	authenticate.AuthUUID = uuid.NewV4().String() // generate uuid
+	authenticate.UserID = userID
+	err := s.DB.Debug().Create(&authenticate).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return authenticate, nil
 }
