@@ -34,7 +34,7 @@ func (s *Server) DeleteAuth(auth *auth.AuthDetails) error {
 	return nil
 }
 
-// CreateAuth := create row uuid with userID
+// CreateAuth := singup/login, creates aa rot of associate user with its new uuid
 func (s *Server) CreateAuth(userID uint64) (*Auth, error) {
 	authenticate := &Auth{}
 	authenticate.AuthUUID = uuid.NewV4().String() // generate uuid
