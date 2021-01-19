@@ -25,6 +25,9 @@ type ServerInterface interface {
 	CreateUser(*User) (*User, error)
 	GetUserByEmail(string) (*User, error)
 
+	// Todo methods:
+	CreateTodo(*Todo) (*Todo, error)
+
 	// auth methods
 	FetchAuth(*auth.AuthDetails) (*Auth, error)
 	DeleteAuth(*auth.AuthDetails) error
