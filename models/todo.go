@@ -9,7 +9,7 @@ type Todo struct {
 	Title  string `gorm:"size:255;not null" json:"title"`
 }
 
-// CreateTodo := create todo object
+// CreateTodo := create todo row
 func (s *Server) CreateTodo(todo *Todo) (*Todo, error) {
 	if todo.Title == "" {
 		return nil, errors.New("please provide a valid title")

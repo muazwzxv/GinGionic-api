@@ -28,6 +28,9 @@ type ServerInterface interface {
 	// Todo methods:
 	CreateTodo(*Todo) (*Todo, error)
 
+	// Book method
+	CreateBooks(*Book) (*Book, error)
+
 	// auth methods
 	FetchAuth(*auth.AuthDetails) (*Auth, error)
 	DeleteAuth(*auth.AuthDetails) error
