@@ -3,6 +3,7 @@ package controllers
 import (
 	"Go-Learn-API/models"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -53,16 +54,17 @@ func CreateBooks(ctx *gin.Context) {
 
 // GetByIDBooks := returns by ID
 func GetByIDBooks(ctx *gin.Context) {
-	if book, err := models.Model.GetByIDBooks(ctx.Param("id")); err != nil {
+
+	id, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		panic("Something wrong happened")
+	}
+
+	if book, err := models.Model.GetByIDBooks(id); err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"error": err})
 	} else {
 		ctx.JSON(http.StatusOK, gin.H{"data": book})
 	}
-
-	// if err := models.DB.Where("id = ?", ctx.Param("id")).First(&book).Error; err != nil {
-	// 	ctx.JSON(http.StatusBadRequest, gin.H{"error": "Data not found!"})
-	// 	return
-	// }
 }
 
 // UpdateByIDBooks := update by ID
