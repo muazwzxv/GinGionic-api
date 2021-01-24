@@ -21,8 +21,10 @@ type UpdateBookDTO struct {
 
 // GetAllBooks := returns all
 func GetAllBooks(ctx *gin.Context) {
-	var books []models.Book
-	models.DB.Find(&books)
+	books, err := models.Model.GetAllBooks()
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"erorr": err})
+	}
 
 	ctx.JSON(http.StatusOK, gin.H{"Data": books})
 }
@@ -32,7 +34,7 @@ func CreateBooks(ctx *gin.Context) {
 	var input CreateBookDTO
 
 	if err := ctx.ShouldBindJSON(&input); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		 ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -40,20 +42,27 @@ func CreateBooks(ctx *gin.Context) {
 		Title:  input.Title,
 		Author: input.Author,
 	}
-	models.DB.Create(&book)
+
+	_, err := models.Model.CreateBooks(&book)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err})
+	}
 
 	ctx.JSON(http.StatusOK, gin.H{"data": book})
 }
 
 // GetByIDBooks := returns by ID
 func GetByIDBooks(ctx *gin.Context) {
-	var book models.Book
-
-	if err := models.DB.Where("id = ?", ctx.Param("id")).First(&book).Error; err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Data not found!"})
-		return
+	if book, err := models.Model.GetByIDBooks(ctx.Param("id")); err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"error": err})
+	} else {
+		ctx.JSON(http.StatusOK, gin.H{"data": book})
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": book})
+
+	// if err := models.DB.Where("id = ?", ctx.Param("id")).First(&book).Error; err != nil {
+	// 	ctx.JSON(http.StatusBadRequest, gin.H{"error": "Data not found!"})
+	// 	return
+	// }
 }
 
 // UpdateByIDBooks := update by ID

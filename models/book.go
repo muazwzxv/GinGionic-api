@@ -1,6 +1,8 @@
 package models
 
-import "errors"
+import (
+	"errors"
+)
 
 // Book := Model for book
 type Book struct {
@@ -23,5 +25,26 @@ func (s *Server) CreateBooks(book *Book) (*Book, error) {
 	if err != nil {
 		return nil, err
 	}
+	return book, nil
+}
+
+// GetAllBooks := Returns all books
+func (s *Server) GetAllBooks() ([]Book, error) {
+	var books []Book
+
+	if err := s.DB.Debug().Find(&books).Error; err != nil {
+		return []Book{}, errors.New("Something wrong happened")
+	}
+
+	return books, nil
+}
+
+// GetByIDBooks := returns book by id
+func (s *Server) GetByIDBooks(id int) (Book, error){
+	var book Book
+	if err := s.DB.Debug().Where("id = ?", id).First(&book).Error; err != nil {
+		return Book{}, errors.New("Not found")
+	}
+
 	return book, nil
 }
