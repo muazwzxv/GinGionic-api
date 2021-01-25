@@ -40,22 +40,26 @@ func Login(ctx *gin.Context) {
 	token, loginErr := service.Authorize.SignIn(authdetails)
 	if loginErr != nil {
 		ctx.JSON(http.StatusForbidden, "please try to login later")
-		return
+	} else {
+		ctx.JSON(http.StatusOK, token)
 	}
-	ctx.JSON(http.StatusOK, token)
+	return
 }
 
-func logout(ctx *gin.Context) {
+// Logout := logout from system
+func Logout(ctx *gin.Context) {
 	authentcate, err := auth.ExtractTokenAuth(ctx.Request)
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, "unauthorized")
 		return
 	}
+
 	delErr := models.Model.DeleteAuth(authentcate)
 	if delErr != nil {
 		log.Println(delErr)
 		ctx.JSON(http.StatusUnauthorized, "unauthorized")
-		return
+	} else {
+		ctx.JSON(http.StatusOK, "Successfully logut")
 	}
-	ctx.JSON(http.StatusOK, "Successfully logut")
+	return
 }

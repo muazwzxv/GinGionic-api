@@ -16,6 +16,12 @@ func main() {
 		log.Fatal("Error connecting to the databaase: ", err)
 	}
 
+	// Auth endpoints
+	router.POST("/register", controllers.CreateUser)
+	router.POST("/login", controllers.Login)
+	router.GET("/logout", controllers.Logout)
+
+	// Books endpoint
 	router.POST("/books", controllers.CreateBooks)
 	router.GET("/books", controllers.GetAllBooks)
 	router.GET("/books/:id", controllers.GetByIDBooks)

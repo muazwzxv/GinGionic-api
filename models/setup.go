@@ -72,6 +72,7 @@ func (s *Server) ConnectDB() (*gorm.DB, error) {
 	s.DB.Debug().AutoMigrate(
 		&Book{},
 		&User{},
+		&Auth{},
 		&Todo{},
 	)
 
