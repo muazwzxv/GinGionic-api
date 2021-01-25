@@ -57,7 +57,7 @@ func GetByIDBooks(ctx *gin.Context) {
 
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
-		panic("Something wrong happened")
+		panic(err)
 	}
 
 	if book, err := models.Model.GetByIDBooks(id); err != nil {
@@ -69,12 +69,10 @@ func GetByIDBooks(ctx *gin.Context) {
 
 // UpdateByIDBooks := update by ID
 func UpdateByIDBooks(ctx *gin.Context) {
-	var book models.Book
 
-	// Query data
-	if err := models.DB.Where("id = ?", ctx.Param("id")).First(&book).Error; err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Record not exist"})
-		return
+	id, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		panic(err)
 	}
 
 	// validate input
@@ -84,9 +82,16 @@ func UpdateByIDBooks(ctx *gin.Context) {
 		return
 	}
 
-	models.DB.Model(&book).Updates(validate)
+	book := models.Book{
+		Title: validate.Title,
+		Author: validate.Author,
+	}	
 
-	ctx.JSON(http.StatusOK, gin.H{"data": book})
+	if updated, err := models.Model.UpdateByIDBooks(id, &book); err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"error": err})
+	} else {
+		ctx.JSON(http.StatusOK, gin.H{"data": updated})
+	}
 }
 
 // DeleteByIDBooks := delete by id

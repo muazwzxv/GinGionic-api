@@ -32,6 +32,7 @@ type ServerInterface interface {
 	CreateBooks(*Book) (*Book, error)
 	GetAllBooks() ([]Book, error)
 	GetByIDBooks(int) (Book, error)
+	UpdateByIDBooks(int, *Book) (Book, error)
 
 	// auth methods
 	FetchAuth(*auth.AuthDetails) (*Auth, error)

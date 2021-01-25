@@ -39,12 +39,23 @@ func (s *Server) GetAllBooks() ([]Book, error) {
 	return books, nil
 }
 
-// GetByIDBooks := returns book by id
+// GetByIDBooks := Returns book by id
 func (s *Server) GetByIDBooks(id int) (Book, error){
 	var book Book
 	if err := s.DB.Debug().Where("id = ?", id).First(&book).Error; err != nil {
 		return Book{}, errors.New("Not found")
 	}
 
+	return book, nil
+}
+
+// UpdateByIDBooks := Update by id
+func (s *Server) UpdateByIDBooks(id int, update *Book) (Book, error) {
+	var book Book
+	if err := s.DB.Debug().Where("id = ?", id).First(&book).Error; err != nil {
+		return Book{}, err
+	}
+
+	s.DB.Debug().Model(&book).Updates(update)
 	return book, nil
 }
