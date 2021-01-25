@@ -59,3 +59,14 @@ func (s *Server) UpdateByIDBooks(id int, update *Book) (Book, error) {
 	s.DB.Debug().Model(&book).Updates(update)
 	return book, nil
 }
+
+// DeleteByIDBooks := delete by id
+func (s *Server) DeleteByIDBooks(id int) error {
+	var book Book
+	if err := s.DB.Debug().Where("id = ?", id).First(&book).Error; err != nil {
+		return err
+	}
+
+	s.DB.Delete(&book)
+	return nil
+} 

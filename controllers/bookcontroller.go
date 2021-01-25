@@ -47,6 +47,7 @@ func CreateBooks(ctx *gin.Context) {
 	_, err := models.Model.CreateBooks(&book)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err})
+		return 
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{"data": book})
@@ -62,8 +63,10 @@ func GetByIDBooks(ctx *gin.Context) {
 
 	if book, err := models.Model.GetByIDBooks(id); err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"error": err})
+		return
 	} else {
 		ctx.JSON(http.StatusOK, gin.H{"data": book})
+		return
 	}
 }
 
@@ -89,21 +92,24 @@ func UpdateByIDBooks(ctx *gin.Context) {
 
 	if updated, err := models.Model.UpdateByIDBooks(id, &book); err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"error": err})
+		return
 	} else {
 		ctx.JSON(http.StatusOK, gin.H{"data": updated})
+		return 
 	}
 }
 
 // DeleteByIDBooks := delete by id
 func DeleteByIDBooks(ctx *gin.Context) {
-	var book models.Book
-
-	if err := models.DB.Where("id = ?", ctx.Param("id")).First(&book).Error; err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Record does not exist", "deleted": false})
-		return
+	id, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		panic(err)
 	}
 
-	models.Models.DB.Delete(&book)
-
+	if err := models.Model.DeleteByIDBooks(id); err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"error": err})
+		return
+	} 
 	ctx.JSON(http.StatusOK, gin.H{"deleted": true})
+	return
 }
