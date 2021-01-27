@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"Go-Learn-API/configs"
 	"fmt"
 	"net/http"
 	"os"
@@ -25,7 +26,8 @@ func CreateToken(auth AuthDetails) (string, error) {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
 
-	return token.SignedString([]byte(os.Getenv("API_SECRET")))
+	secret := configs.GetTokenSecret()
+	return token.SignedString([]byte(secret))
 }
 
 // ExtractToken := Extract token from header

@@ -35,6 +35,11 @@ func readEnv(key string) string {
 	return value
 }
 
+// GetTokenSecret := returns jwt secret
+func GetTokenSecret() string {
+	return readEnv("API_SECRET")
+}
+
 // DBConfig returns database config
 func DBConfig() (DatabaseConfig, error) {
 	port, err := strconv.Atoi(readEnv("DBPORT"))
