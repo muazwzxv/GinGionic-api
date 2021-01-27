@@ -2,6 +2,7 @@ package main
 
 import (
 	"Go-Learn-API/controllers"
+	"Go-Learn-API/middleware"
 	"Go-Learn-API/models"
 	"log"
 
@@ -22,11 +23,11 @@ func main() {
 	router.GET("/logout", controllers.Logout)
 
 	// Books endpoint
-	router.POST("/books", controllers.CreateBooks)
-	router.GET("/books", controllers.GetAllBooks)
-	router.GET("/books/:id", controllers.GetByIDBooks)
-	router.PATCH("/books/:id", controllers.UpdateByIDBooks)
-	router.DELETE("books/:id", controllers.DeleteByIDBooks)
+	router.POST("/books", middleware.TokenAuthMiddleware(), controllers.CreateBooks)
+	router.GET("/books", middleware.TokenAuthMiddleware(), controllers.GetAllBooks)
+	router.GET("/books/:id", middleware.TokenAuthMiddleware(), controllers.GetByIDBooks)
+	router.PATCH("/books/:id", middleware.TokenAuthMiddleware(), controllers.UpdateByIDBooks)
+	router.DELETE("books/:id", middleware.TokenAuthMiddleware(), controllers.DeleteByIDBooks)
 
 	router.Run()
 }
