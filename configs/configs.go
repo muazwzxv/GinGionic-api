@@ -44,6 +44,15 @@ func GetTokenSecret() string {
 	return secret
 }
 
+// GetRefreshToken := return refresh tokens secret
+func GetRefreshToken() string {
+	refresh := readEnv("REFRESH_TOKEN")
+	if refresh == "" {
+		refresh = "refresh"
+	}
+	return refresh
+}
+
 // DBConfig returns database config
 func DBConfig() (DatabaseConfig, error) {
 	port, err := strconv.Atoi(readEnv("DBPORT"))

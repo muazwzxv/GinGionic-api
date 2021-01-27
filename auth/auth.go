@@ -108,5 +108,27 @@ func ExtractTokenAuth(req *http.Request) (*AuthDetails, error) {
 		}, nil
 	}
 	return nil, err
-
 }
+
+// // Refresh := function to extract token
+// func Refresh(ctx *gin.Context) {
+// 	mapToken := map[string]string{}
+
+// 	if err := ctx.ShouldBindJSON(&mapToken); err != nil {
+// 		ctx.JSON(http.StatusUnprocessableEntity, err.Error())
+// 		return
+// 	}
+// 	refreshToken := mapToken["refresh_token"]
+
+// 	// Verify the token
+// 	token, err := jwt.Parse(refreshToken, func(token *jwt.Token) (interface{}, error) {
+// 		// Make sure the token method conforms to "SigningMethodHMAC"
+// 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+// 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+// 		}
+// 		return []byte(configs.GetRefreshToken()), nil
+// 	})
+
+// }
+
+//

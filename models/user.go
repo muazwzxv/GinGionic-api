@@ -11,6 +11,7 @@ import (
 type User struct {
 	ID    uint64 `gorm:"primary_key;auto_increment" json:"id"`
 	Email string `gorm:"size:255;not null;unique" json:"email"`
+	// Password string `json:"pasword"`
 	//DeletedAt gorm.DeletedAt `gorm: "index"`
 	CreatedAt time.Time
 }
