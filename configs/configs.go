@@ -37,7 +37,11 @@ func readEnv(key string) string {
 
 // GetTokenSecret := returns jwt secret
 func GetTokenSecret() string {
-	return readEnv("API_SECRET")
+	secret := readEnv("API_SECRET")
+	if secret == "" {
+		secret = "secret"
+	}
+	return secret
 }
 
 // DBConfig returns database config
